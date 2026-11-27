@@ -5,7 +5,15 @@ const findByEmail = async (email) => {
     "SELECT id, name, email, password_hash, created_at FROM users WHERE email = $1";
 
   const { rows } = await pool.query(query, [email]);
-  
+
+  return rows[0] || null;
+};
+
+const findById = async (id) => {
+  const query = "SELECT id, name, email, created_at FROM users WHERE id = $1";
+
+  const { rows } = await pool.query(query, [id]);
+
   return rows[0] || null;
 };
 
@@ -21,5 +29,6 @@ const create = async ({ name, email, passwordHash }) => {
 
 module.exports = {
   findByEmail,
+  findById,
   create,
 };
